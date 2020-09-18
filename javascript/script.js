@@ -1,29 +1,44 @@
+// Establish array containing questions, choices, and answers
+var questions = [
+  {
+    title: "Functions must be wrapped in:",
+    choices: ["{}", "[]", "()", " '' "],
+    answer: "{}",
+  },
+  {
+    title: "Which term is not used to create variables:",
+    choices: ["const", "let", "var", "set"],
+    answer: "set",
+  },
+  {
+    title: "A variable declared outside a function is:",
+    choices: ["local", "visible", "global", "null"],
+    answer: "global",
+  },
+  {
+    title: "Console.log _______ to the console:",
+    choices: ["links", "switches", "codes", "prints"],
+    answer: "prints",
+  },
+  {
+    title: "The control flow through functions is called the:",
+    choices: ["function flow", "call stack", "lexical scoping", "environment"],
+    answer: "call stack",
+  },
+];
 
 // Establish global variables
 var seconds = 75;
 var questionCount = 0;
-
-// Establish global array containing questions, choices, and answers
-var questions = [
-  {
-    title: "Commonly used data types DO NOT include:",
-    choices: ["strings", "booleans", "alerts", "numbers"],
-    answer: "alerts",
-  },
-  {
-    title: "mama used data types DO NOT include:",
-    choices: ["strings", "booleans", "alerts", "numbers"],
-    answer: "alerts",
-  }
-];
+var endScreen = document.getElementById("end-screen");
 
 // Document ready function to wrap functions in
 $(document).ready(function () {
-  // On click of the start quiz button, all our events kick off
 
+  // On click of the start quiz button, all our events kick off
   $("#start-quiz").on("click", function () {
 
-    // Initialize timer countdown at 75 seconds
+    // Initialize timer countdown
     var timer = setInterval(countDown, 1000);
     function countDown() {
       document.getElementById("timer").innerHTML = seconds;
@@ -36,38 +51,38 @@ $(document).ready(function () {
     var homeScreen = document.getElementById("home-screen");
     homeScreen.style.display = "none";
 
-    // Display question - call functions that rely on click event
+    // Display questions 
     handleQuestion();
 
-    handleAnswer();
+    // Display end screen
+    endQuiz();
 
-    // to reset set to ""
+    // Store seconds in local storage 
+    localStorage.setItem("timer", seconds);
   });
 
 
-
-  // Each question has 3 attributes: title, choices, and answer
+  // Display question/append to DOM
   function handleQuestion() {
-    var answerButton;
     var question = $("<div>");
     question.text(questions[0].title);
     $("#mainpage").append(question);
 
-    // Choices  - figure out how to show on new line
+    // Choices
     for (var i = 0; i < questions[0].choices.length; i++) {
       var answerButton = $("<button>");
-      $(".button").attr("id", "answer-button");
       answerButton.addClass("btn btn-primary btn-sm");
       answerButton.text(questions[0].choices[i]);
       $("#mainpage").append(answerButton);
-
     };
 
-    answerButton.addEventListener("click", function (event) {
-      answerState = $("<div>");
-      // userAnswer.attr("class");  -- add styling
+    var button = document.querySelector("button");
+    button.addEventListener("click", function (event) {
+      event.preventDefault();
 
-      if ($("#answer-button").value === questions[i].answer[i]) {
+      var answerState = $("<div>");
+
+      if (button.val === questions[0].answer[i]) {
         answerState.text("Correct!");
       }
 
@@ -76,25 +91,17 @@ $(document).ready(function () {
         // Decrement time by 10 seconds for wrong answer
         seconds -= 10;
       }
-
+      question.append(answerState);
       $("#mainpage").append(answerState)
     });
   };
 
-  // function handleAnswer() {
-  //   var answerButton
-  //   "#answer-button".addEventListener("click", function (event) {
-  //     event.preventDefault();
-
-
-  //   });
-
-
+  function endQuiz() {
+    var endScreen = document.getElementById("end-screen");
+    endScreen.removeAttribute("class");
+  }
 
 
 });
 
 
-// set question counter
-  // Store seconds in local storage 
-  // localStorage.setItem("timer", seconds);
