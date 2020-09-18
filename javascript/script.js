@@ -55,12 +55,12 @@ $(document).ready(function () {
     handleQuestion();
 
     // Display end screen
-    endQuiz();
+    //  endQuiz();
 
     // Store seconds in local storage 
     localStorage.setItem("timer", seconds);
-  });
 
+  });
 
   // Display question/append to DOM
   function handleQuestion() {
